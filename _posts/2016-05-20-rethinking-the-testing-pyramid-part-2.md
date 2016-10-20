@@ -28,9 +28,11 @@ Our sample application has a database it depends on, a UI through which requests
 ### Database
 <img src="/assets/img/custom/blog/2016-05-20-rethinking-the-testing-pyramid/repositories.png"/>
 Let's get started by testing all repositories we are using. Using the real DB, we make a save and load for each repository to make sure it is wired up correctly. It is feasible to have a simple CRUD repository doing that connection, as we do not need to implicitly include business rules in our tests. If we are using a library or a framework to translate from code to DB calls it's good to avoid re-testing functionality the framework provides. We want to have one test verifying our configurations or any adjustments we made to the library.
-If we have any DB-specific features like stored procedures or custom SQL queries, these also need to be tested against the real DB. In this case, we can make our tests run faster on the local environment by configuring an in memory DB like H2 or HSQL. The same code with a different configuration can be tested on the build server against a production like database to catch DB-specific edge cases.
-We connect our repositories to the business layer using a service class, which we test independently with a mocked repository.
+If we have any DB-specific features like stored procedures or custom SQL queries, these also need to be tested against the real DB. In this case, we can make our tests run faster on the local environment by configuring an in memory DB like [H2](http://www.h2database.com/html/main.html) or [HSQL](http://hsqldb.org/). The same code with a different configuration can be tested on the build server against a production like database to catch DB-specific edge cases.
+We connect our repositories to the business layer using a service class, which we test independently [with a mocked repository](http://codurance.com/2016/01/31/isolating-integration-tests-with-the-spring-framework/).
 <img src="/assets/img/custom/blog/2016-05-20-rethinking-the-testing-pyramid/db-services.png"/>
+We assume the repository
+J. B. Rainsberger [talks about](http://www.fullstackradio.com/38) the concept of using a framework in the same way again and again and finding yourself repeating similar tests. So finding the right abstraction is paramount and
 
 ### Frontend
 <img src="/assets/img/custom/blog/2016-05-20-rethinking-the-testing-pyramid/frontend-services.png"/>
